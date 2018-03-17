@@ -53,8 +53,7 @@ function Circle(x, y, dx, dy, radius) {
     this.dy = dy;
     this.raduis = radius;
 
-    this.draw = function () {
-        c.clearRect(0, 0, innerWidth, innerHeight);
+    this.draw = function(){
         c.beginPath();
         c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
         c.strokeStyle = 'blue';
@@ -73,31 +72,23 @@ function Circle(x, y, dx, dy, radius) {
     }
 }
 
-//instantiate an object
-var circle = new Circle(200, 200, 3,3,30);
-
-var x = Math.random() * innerWidth;
-var dx = (Math.random() - 0.5) * 8;
-var y = Math.random() * innerHeight;
-var dy = (Math.random() - 0.5) * 12;
-var radius = 30;
+var circleArray = [];
+for (var i = 0; i < 100; i++){
+    var x = Math.random() * innerWidth;
+    var y = Math.random() * innerHeight;
+    var dx = (Math.random() - 0.5) * 8;
+    var dy = (Math.random() - 0.5) * 8;
+    var radius = 30;
+    circleArray.push(new Circle(x,y,dx,dy,radius));
+}
 
 function animate() {
     requestAnimationFrame(animate);
     c.clearRect(0, 0, innerWidth, innerHeight);
-    circle.draw();
-    c.beginPath();
-    c.arc(x, y, radius, 0, Math.PI * 2, false);
-    c.strokeStyle = 'blue';
-    c.stroke();
-    if (x + radius > innerWidth || x - radius < 0) {
-        dx = -dx
+
+    for(var i =0; i< circleArray.length; i++){
+        circleArray[i].update();
     }
-    if (y + radius > innerHeight || y - radius < 0) {
-        dy = -dy;
-    }
-    x += dx;
-    y += dy;
 }
 
 animate();
